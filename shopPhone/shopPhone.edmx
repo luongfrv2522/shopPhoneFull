@@ -139,6 +139,11 @@
         <Function Name="SP_PageList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Page" Type="int" Mode="In" />
           <Parameter Name="quantity_row" Type="int" Mode="In" />
+          <Parameter Name="total" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_PageList_RETURN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Page" Type="int" Mode="In" />
+          <Parameter Name="quantity_row" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="ShopDienThoaiModelStoreContainer">
           <EntitySet Name="brand" EntityType="Self.brand" Schema="dbo" store:Type="Tables" />
@@ -201,7 +206,12 @@
             <End Role="phone" EntitySet="phones" />
             <End Role="rela_phone_gallery" EntitySet="rela_phone_gallery" />
           </AssociationSet>
-          <FunctionImport Name="SP_PageList" ReturnType="Collection(ShopDienThoaiModel.SP_PageList_Result)">
+          <FunctionImport Name="SP_PageList" EntitySet="phones" ReturnType="Collection(ShopDienThoaiModel.phone)">
+            <Parameter Name="Page" Mode="In" Type="Int32" />
+            <Parameter Name="quantity_row" Mode="In" Type="Int32" />
+            <Parameter Name="total" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_PageList_RETURN">
             <Parameter Name="Page" Mode="In" Type="Int32" />
             <Parameter Name="quantity_row" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -359,6 +369,18 @@
           <Property Type="DateTime" Name="created_at" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="updated_at" Nullable="true" Precision="23" />
         </ComplexType>
+        <ComplexType Name="SP_PageList_RETURN_Result">
+          <Property Type="Int32" Name="id_phone" Nullable="false" />
+          <Property Type="String" Name="phone_name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="image_feature" Nullable="true" MaxLength="255" />
+          <Property Type="Decimal" Name="price" Nullable="true" Precision="19" />
+          <Property Type="Int32" Name="status" Nullable="true" />
+          <Property Type="Int32" Name="position" Nullable="true" />
+          <Property Type="Int32" Name="id_brand" Nullable="true" />
+          <Property Type="DateTime" Name="created_at" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="updated_at" Nullable="true" Precision="23" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -442,22 +464,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SP_PageList" FunctionName="ShopDienThoaiModel.Store.SP_PageList">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ShopDienThoaiModel.SP_PageList_Result">
-                <ScalarProperty Name="id_phone" ColumnName="id_phone" />
-                <ScalarProperty Name="phone_name" ColumnName="phone_name" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="image_feature" ColumnName="image_feature" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="position" ColumnName="position" />
-                <ScalarProperty Name="id_brand" ColumnName="id_brand" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_PageList" FunctionName="ShopDienThoaiModel.Store.SP_PageList" />
+          <FunctionImportMapping FunctionImportName="SP_PageList_RETURN" FunctionName="ShopDienThoaiModel.Store.SP_PageList_RETURN" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

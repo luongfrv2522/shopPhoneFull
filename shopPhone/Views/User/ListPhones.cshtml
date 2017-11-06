@@ -82,9 +82,9 @@
             </ul>
         </div>
         <div class="page_list">
-            @for (int u = 0; u < 5; u++)
+            @for (int u = 1; u <= ViewBag.TotalPage; u++)
             {
-                <div class="page_item"><a href="#">@u</a></div>
+                <div class="page_item"><a href="@Url.Action("ListPhones", null, new { Page = @u })">@u</a></div>
             }
         </div>
     </div>

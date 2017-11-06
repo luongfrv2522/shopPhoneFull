@@ -203,6 +203,9 @@
     <Compile Include="SP_PageList_Result.cs">
       <DependentUpon>shopPhone.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_PageList_RETURN_Result.cs">
+      <DependentUpon>shopPhone.tt</DependentUpon>
+    </Compile>
     <Compile Include="sysdiagram.cs">
       <DependentUpon>shopPhone.tt</DependentUpon>
     </Compile>

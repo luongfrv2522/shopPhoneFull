@@ -35,7 +35,7 @@ namespace shopPhone
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<user> users { get; set; }
     
-        public virtual ObjectResult<SP_PageList_Result> SP_PageList(Nullable<int> page, Nullable<int> quantity_row)
+        public virtual ObjectResult<phone> SP_PageList(Nullable<int> page, Nullable<int> quantity_row, ObjectParameter total)
         {
             var pageParameter = page.HasValue ?
                 new ObjectParameter("Page", page) :
@@ -45,7 +45,33 @@ namespace shopPhone
                 new ObjectParameter("quantity_row", quantity_row) :
                 new ObjectParameter("quantity_row", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PageList_Result>("SP_PageList", pageParameter, quantity_rowParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<phone>("SP_PageList", pageParameter, quantity_rowParameter, total);
+        }
+    
+        public virtual ObjectResult<phone> SP_PageList(Nullable<int> page, Nullable<int> quantity_row, ObjectParameter total, MergeOption mergeOption)
+        {
+            var pageParameter = page.HasValue ?
+                new ObjectParameter("Page", page) :
+                new ObjectParameter("Page", typeof(int));
+    
+            var quantity_rowParameter = quantity_row.HasValue ?
+                new ObjectParameter("quantity_row", quantity_row) :
+                new ObjectParameter("quantity_row", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<phone>("SP_PageList", mergeOption, pageParameter, quantity_rowParameter, total);
+        }
+    
+        public virtual int SP_PageList_RETURN(Nullable<int> page, Nullable<int> quantity_row)
+        {
+            var pageParameter = page.HasValue ?
+                new ObjectParameter("Page", page) :
+                new ObjectParameter("Page", typeof(int));
+    
+            var quantity_rowParameter = quantity_row.HasValue ?
+                new ObjectParameter("quantity_row", quantity_row) :
+                new ObjectParameter("quantity_row", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_PageList_RETURN", pageParameter, quantity_rowParameter);
         }
     }
 }

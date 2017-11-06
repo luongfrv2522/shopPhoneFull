@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
-
+using System.Data.Entity.Core.Objects;
 
 namespace shopPhone.Controllers
 {
@@ -50,7 +50,8 @@ namespace shopPhone.Controllers
         }
         public ActionResult ListPhones(string SortParam, int? Brand, int? Page=1)
         {
-           
+            
+            //List<phone> listO = new List<phone>();
             switch (SortParam)
             {
                 case "sort_price_down":
@@ -70,7 +71,9 @@ namespace shopPhone.Controllers
                         ViewBag.SortParam = "Yêu thích";
                         if (Page != null && Page > 0)
                         {
-                            
+                            var TotalPage = new ObjectParameter("total", typeof(int));
+                            listO = db.SP_PageList(Page, 10, TotalPage).ToList();
+                            ViewBag.TotalPage = (int)TotalPage.Value;
                         }
                         break;
                     }
