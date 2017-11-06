@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+@{ 
+    ShopDienThoaiEntities db = new ShopDienThoaiEntities();
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="UTF-8">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/myCss")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/myScript")
+</head>
+<body>
+    <div class="top_navs">
+        <div id="logo">
+            <a href="@Url.Action("Index")"><img src="~/Media/shopLogo.png" /></a>
+        </div>
+        <div id="menu_top">
+            <ul>
+                <li><a href="@Url.Action("Index")" class="btn_top_navs"><b>Trang chủ</b></a></li>
+                <li class="drop_down">
+                    <a href="" class="btn_top_navs"><b>Hãng</b></a>
+                    <ul class="listDrop">
+                        @foreach (var x in db.brands.ToList())
+                        {
+                            <li><a href="@Url.Action("ListPhones",null,new { Brand=x.id_brand })">@x.brand_name</a></li>
+                        }
+                    </ul>
+                </li>
+                
+                <li><a href="@Url.Action("ListPhones")" class="btn_top_navs"><b>sản phẩm</b></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="full_content">
+        <div id="banner" style="text-align:center">
+            <img style="width:1234px; height:215px; margin-top:52px" src="https://www.internetcreation.net/wp-content/uploads/2015/04/banner-mobile-app.png" />
+        </div>
+        <div class="content_item">
+            @RenderBody()
+        </div>
+        
+        <footer style="margin-top:15px;">
+            <hr />
+            <p>&copy; @DateTime.Now.Year - Common Layout</p>
+        </footer>
+    </div>
+
+    
+</body>
+
+</html>
+
+
+
+
+

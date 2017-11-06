@@ -1,0 +1,51 @@
+﻿@using shopPhone.Models
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/shopLayout.cshtml";
+    List<ItemSlide> list = Model;
+}
+
+@foreach (var x in list)
+{
+    <div class="list_contents">
+        <h2>@x.nameCatlg</h2>
+        <div class="slide_item">
+            <ul>
+                @foreach (var item in x.listItemS)
+                {
+                    <li >
+                        <a href="@Url.Action("Detail", null, new { ID = item.aPhone.id_phone })">
+                            <img src="@item.aPhone.image_feature" class="item" />
+                            <div class="item_info">
+                                <h3>@item.aPhone.phone_name</h3>
+                                <p>Hãng: @item.mapBrand.brand_name</p>
+                                <p>Giá: @String.Format("{0:0,0.## đ}", item.aPhone.price)</p>
+                            </div>
+                       </a>
+</li>
+                    <li>
+                        <a href="@Url.Action("Detail", null, new { ID = item.aPhone.id_phone })">
+                            <img src="@item.aPhone.image_feature" class="item" />
+                            <div class="item_info">
+                                <h3>@item.aPhone.phone_name</h3>
+                                <p>Hãng: @item.mapBrand.brand_name</p>
+                                <p>Giá: @String.Format("{0:0,0.## đ}", item.aPhone.price)</p>
+                            </div>
+                        </a>
+                    </li>
+                }
+
+            </ul>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+	//$(document).ready(function() {
+ //   	 $(".slide_item ul li").hover(function() {
+ //   	 	$(this).css('border','1px solid red');
+ //   	 }, function() {
+ //   	 	$(this).css('border','1px solid transparent');
+ //   	 });
+
+ //   });
+</script>

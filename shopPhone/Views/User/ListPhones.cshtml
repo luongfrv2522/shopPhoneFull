@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "ListPhones";
+    Layout = "~/Views/Shared/shopLayout.cshtml";
+    List<phone> list = Model;
+    ShopDienThoaiEntities db = new ShopDienThoaiEntities();
+    List<brand> listBrand = db.brands.ToList();
+}
+
+<style>
+.page_list {
+    display: inline-block;
+    position: relative;
+    background-color: aqua;
+    width: 100%;
+    height: 33px;
+    margin-top: 12px;
+    text-align: left;
+}
+.page_item, .page_item a{
+    display:inline-block;
+}
+.page_item a {
+    background: burlywood;
+    padding: 2px 0px 3px 0px;
+    width: 26px;
+    text-align: center;
+    margin-top: 6px;
+    margin-left: 5px;
+}
+</style>
+
+<div class="listPhones">
+    <div class="left_content">
+        <div class="list_content_block">
+            <div class="list_Header">Hãng</div>
+            <div class="list_item_block">
+                @foreach (brand abrand in listBrand)
+                {
+                    <div class="list_group_block"><a href="@Url.Action("ListPhones", null, new { Brand = abrand.id_brand })">@abrand.brand_name</a></div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="list_contents">
+        <div class="filter_bar">
+            <div class="sort_list">
+                <div class="active_now">
+                    Sắp xếp: <span>@ViewBag.SortParam</span>
+                </div>
+                <div class="group_sort_list">
+                    <a href="@Url.Action("ListPhones", null, new { SortParam = "sort_price_up" })">Giá thấp đến cao</a>
+                    <a href="@Url.Action("ListPhones", null, new { SortParam = "sort_price_down" })">Giá cao đến thấp</a>
+                    <a href="@Url.Action("ListPhones", null, new { SortParam = "" })">Yêu thích</a>
+                </div>
+            </div>
+        </div>
+        <h2>Danh sách điện thoại</h2>
+        <div class="slide_item">
+            <ul>
+                @{ int ii = 0;}
+                @{
+
+                    foreach (var item in list)
+                    {
+                        if (ii < 15)
+                        {
+                            <li>
+                                <a href="@Url.Action("Detail", null, new {ID = item.id_phone })">
+                                    <img src="@item.image_feature" class="item" />
+                                    <div class="item_info">
+                                        <h3>@item.phone_name</h3>
+                                        <p>Hãng: @db.brands.Find(item.id_brand).brand_name</p>
+                                        <p>Giá: @String.Format("{0:0,0 đ}", item.price)</p>
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                        ii++;
+                    }
+                }
+            </ul>
+        </div>
+        <div class="page_list">
+            @for (int u = 0; u < 5; u++)
+            {
+                <div class="page_item"><a href="#">@u</a></div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+﻿@model shopPhone.gallery
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/shopLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>gallery</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.gallery_name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gallery_name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_gallery }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

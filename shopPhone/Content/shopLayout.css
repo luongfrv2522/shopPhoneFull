@@ -1,0 +1,149 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    font-family: "Times New Roman", Times, serif;
+}
+
+body{
+    margin : 0;
+    min-height : 1000px;
+    max-width : 100%;
+    min-width : 720px;
+}
+.content_item {
+    width: 1234px;
+    overflow: hidden;
+}
+ul {
+    list-style-type: none;
+}
+.list_contents {
+    
+   
+}
+.slide_item ul li {
+    font-size : 13px;
+    display: inline-table;
+    width: 150px;
+    height: 250px;
+    margin: 5px;
+    padding: 5px;
+    text-align: left;
+    border: 1px solid transparent;
+    background-color: aliceblue;
+    box-shadow : 0 4px 8px 0 rgba(0,0,0,0.2)
+}
+    .slide_item ul li:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2)
+    }
+.full_content {
+    width: 1234px;
+    margin-left : 20%;
+    padding-top: 5px;
+}
+.top_navs {
+    background: #2a2a2a;
+    z-index : 1000;
+    color : white;
+    width : 100%;
+    margin-top : 0;
+    position : fixed;
+}
+#menu_top {
+    margin-top: 22px;
+    margin-left: 15px;
+    float: left;
+    position: relative;
+}
+.top_navs ul{
+    margin-top : 0;
+    display : inline-block;
+}
+.top_navs ul li {
+    display: inline-block;
+}
+#logo img, #logo{
+    width : 250px;
+    float : left;
+}
+
+.btn_top_navs{
+    padding : 10px;
+    text-decoration : none;
+    height : 100%;
+    background-color : white;
+}
+.btn_top_navs:hover {
+        background-color: #f1f1f1;
+}
+
+.item {
+    width: 150px;
+}
+a:link ,a:visited{
+    text-decoration: none;
+    color : black;
+}
+
+.item_info{
+    margin-top : 7px;
+
+}
+.item_info p,h3{
+    margin-top: 2px;
+
+}
+.listDrop {
+    display: none !important;
+    position: absolute;
+    z-index: 3;
+    width: 450px;
+    left: 83px;
+    top: 25px;
+    border-radius : 2px;
+}
+.drop_down:hover .btn_top_navs {
+    background-color: #f1f1f1 !important;
+}
+.drop_down:hover .listDrop {
+    display: block !important;
+    background-color: #f1f1f1;
+}
+.listDrop li {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    margin: 3px;
+    border-radius: 2px;
+}
+.listDrop li:hover{
+    background-color:aqua;
+}
+
+
+/*Left menu*/
+.list_content_block {
+    border: 1px solid;
+}
+.list_Header {
+    text-align: center;
+    font-size: 27px;
+    padding: 5px;
+    font-weight: bold;
+}
+.list_group_block {
+    display: block;
+    height: 39px;
+    border-top: 1px solid;
+    text-align: center;
+    margin-top: 1px;
+
+}
+.list_group_block a{
+    display: block;
+    margin-top: 10px;
+}
+list_content_block:first-child{
+    font-size: 18px ;
+}

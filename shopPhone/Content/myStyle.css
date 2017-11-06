@@ -1,0 +1,68 @@
+﻿.myBtn {
+    background: #25CDFF;
+    padding : 10px;
+    margin : 3px;
+}
+.imgItem {
+    width: 50px;
+    height: 50px; 
+}
+.Action {
+    padding: 20px !important;
+    display: flex;
+}
+
+th, td{
+    text-align : center;
+}
+/* ListPhones css*/
+.left_content{
+    background-color :cadetblue;
+    width : 20%;
+    height: 800px;
+    float : left;
+}
+.filter_bar {
+    width: 100%;
+    height: 60px;
+    background-color: rebeccapurple;
+}
+.listPhones .list_contents {
+    width: 75%;
+    margin-left: 37px;
+    padding-left: 10px;
+    float: left;
+}
+footer{
+    clear : left;
+}
+
+.sort_list {
+    position: relative;
+    float: right;
+    width: 185px;
+    height: 30px;
+    background: aliceblue;
+    margin-top: 14px;
+    margin-right: 15px;
+    text-align: center;
+}
+    .group_sort_list {
+        width: 100%;
+        background-color: aliceblue;
+        position: absolute;
+        display: none;
+        margin-top: 4px;
+    }
+        .group_sort_list a {
+            display: block;
+            padding: 5px 0 5px 0;
+            border-top: 1px solid;
+        }
+.group_sort_list a:hover {
+    box-shadow: 0 0px 7px 0 rgba(0,0,0,0.5);
+}
+
+.active_now {
+    margin-top: 7px;
+}

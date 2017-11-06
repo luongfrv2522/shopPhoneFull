@@ -1,0 +1,35 @@
+﻿@model shopPhone.phone
+
+@{
+    ShopDienThoaiEntities db = new ShopDienThoaiEntities();
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/shopLayout.cshtml";
+    phone aPhone = Model;
+}
+
+    
+<h2>Detail</h2>
+
+<div style="width: 100%; " class="list_contents">
+    <h4>@aPhone.phone_name</h4>
+    <hr />
+    <div id="right-content" class="content">
+        
+        <div class="list-group-item" style="width: 450px; margin-left: 30%; 
+             padding :10px; margin-top :15px; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);">
+            <img src="@aPhone.image_feature" class="img11">
+
+            <div class="content-item" style="">
+                <p>Hãng: @db.brands.Find(aPhone.id_brand).brand_name</p>
+                <p>Giá: @String.Format("{0:0,0 đ}", aPhone.price)</p>
+                <pre>Mô tả: @aPhone.description</pre>
+            </div>
+        </div>
+        <p style=" padding : 5px">
+            @Html.ActionLink("Edit", "Edit", new { }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
+    
+</div>
+

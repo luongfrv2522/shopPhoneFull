@@ -1,0 +1,91 @@
+﻿@model IEnumerable<shopPhone.phone>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/myStyle.css")
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create",null,new {@class = "myBtn" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.phone_name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.image_feature)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.position)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.id_brand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.created_at)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.updated_at)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rela_brand_phone.id_phone)
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @item.phone_name
+        </td>
+        <td>
+            @item.description
+        </td>
+        <td>
+            <img class="imgItem" src="@item.image_feature"/>
+        </td>
+        <td>
+            @String.Format("{0:0,0.##} VNĐ", item.price)
+        </td>
+        <td>
+            @item.status
+        </td>
+        <td>
+            @item.position
+        </td>
+        <td>
+            @item.id_brand
+        </td>
+        <td>
+            @item.created_at
+        </td>
+        <td>
+            @item.updated_at
+        </td>
+        <td>
+            @item.id_phone
+        </td>
+        <td class="Action">
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_phone }, new {@class = "myBtn",id=item.id_phone }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_phone }, new { @class = "myBtn", id = item.id_phone }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_phone }, new { @class = "myBtn", id = item.id_phone })
+        </td>
+    </tr>
+}
+
+</table>
