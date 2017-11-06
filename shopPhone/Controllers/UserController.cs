@@ -70,7 +70,7 @@ namespace shopPhone.Controllers
                         ViewBag.SortParam = "Yêu thích";
                         if (Page != null && Page > 0)
                         {
-                            listO = db.SP_PageList(Page,15);
+                            
                         }
                         break;
                     }
