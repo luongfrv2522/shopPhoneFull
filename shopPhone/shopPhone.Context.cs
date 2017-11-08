@@ -74,7 +74,7 @@ namespace shopPhone
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_PageList_RETURN", pageParameter, quantity_rowParameter);
         }
     
-        public virtual int sp_PageList_all(Nullable<int> page, Nullable<int> quantity_row, string table_name, string pK_col_name, ObjectParameter total)
+        public virtual ObjectResult<SP_PageList_Result> sp_PageList_all(Nullable<int> page, Nullable<int> quantity_row, string table_name, string pK_col_name, ObjectParameter total)
         {
             var pageParameter = page.HasValue ?
                 new ObjectParameter("Page", page) :
@@ -92,7 +92,75 @@ namespace shopPhone
                 new ObjectParameter("PK_col_name", pK_col_name) :
                 new ObjectParameter("PK_col_name", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_PageList_all", pageParameter, quantity_rowParameter, table_nameParameter, pK_col_nameParameter, total);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_PageList_Result>("sp_PageList_all", pageParameter, quantity_rowParameter, table_nameParameter, pK_col_nameParameter, total);
+        }
+    
+        public virtual ObjectResult<phone> SP_phone_price_PL(Nullable<int> page, Nullable<int> quantity_row, Nullable<bool> order, ObjectParameter total)
+        {
+            var pageParameter = page.HasValue ?
+                new ObjectParameter("Page", page) :
+                new ObjectParameter("Page", typeof(int));
+    
+            var quantity_rowParameter = quantity_row.HasValue ?
+                new ObjectParameter("quantity_row", quantity_row) :
+                new ObjectParameter("quantity_row", typeof(int));
+    
+            var orderParameter = order.HasValue ?
+                new ObjectParameter("order", order) :
+                new ObjectParameter("order", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<phone>("SP_phone_price_PL", pageParameter, quantity_rowParameter, orderParameter, total);
+        }
+    
+        public virtual ObjectResult<phone> SP_phone_price_PL(Nullable<int> page, Nullable<int> quantity_row, Nullable<bool> order, ObjectParameter total, MergeOption mergeOption)
+        {
+            var pageParameter = page.HasValue ?
+                new ObjectParameter("Page", page) :
+                new ObjectParameter("Page", typeof(int));
+    
+            var quantity_rowParameter = quantity_row.HasValue ?
+                new ObjectParameter("quantity_row", quantity_row) :
+                new ObjectParameter("quantity_row", typeof(int));
+    
+            var orderParameter = order.HasValue ?
+                new ObjectParameter("order", order) :
+                new ObjectParameter("order", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<phone>("SP_phone_price_PL", mergeOption, pageParameter, quantity_rowParameter, orderParameter, total);
+        }
+    
+        public virtual ObjectResult<phone> SP_phone_brand_PL(Nullable<int> page, Nullable<int> quantity_row, Nullable<int> id_brand, ObjectParameter total)
+        {
+            var pageParameter = page.HasValue ?
+                new ObjectParameter("Page", page) :
+                new ObjectParameter("Page", typeof(int));
+    
+            var quantity_rowParameter = quantity_row.HasValue ?
+                new ObjectParameter("quantity_row", quantity_row) :
+                new ObjectParameter("quantity_row", typeof(int));
+    
+            var id_brandParameter = id_brand.HasValue ?
+                new ObjectParameter("id_brand", id_brand) :
+                new ObjectParameter("id_brand", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<phone>("SP_phone_brand_PL", pageParameter, quantity_rowParameter, id_brandParameter, total);
+        }
+    
+        public virtual ObjectResult<phone> SP_phone_brand_PL(Nullable<int> page, Nullable<int> quantity_row, Nullable<int> id_brand, ObjectParameter total, MergeOption mergeOption)
+        {
+            var pageParameter = page.HasValue ?
+                new ObjectParameter("Page", page) :
+                new ObjectParameter("Page", typeof(int));
+    
+            var quantity_rowParameter = quantity_row.HasValue ?
+                new ObjectParameter("quantity_row", quantity_row) :
+                new ObjectParameter("quantity_row", typeof(int));
+    
+            var id_brandParameter = id_brand.HasValue ?
+                new ObjectParameter("id_brand", id_brand) :
+                new ObjectParameter("id_brand", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<phone>("SP_phone_brand_PL", mergeOption, pageParameter, quantity_rowParameter, id_brandParameter, total);
         }
     }
 }

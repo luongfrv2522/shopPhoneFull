@@ -5,6 +5,8 @@
     List<phone> list = Model;
     ShopDienThoaiEntities db = new ShopDienThoaiEntities();
     List<brand> listBrand = db.brands.ToList();
+
+
 }
 
 <style>
@@ -37,7 +39,7 @@
             <div class="list_item_block">
                 @foreach (brand abrand in listBrand)
                 {
-                    <div class="list_group_block"><a href="@Url.Action("ListPhones", null, new { Brand = abrand.id_brand })">@abrand.brand_name</a></div>
+                    <div class="list_group_block"><a href="@Url.Action("ListPhones", null, new { Brand = abrand.id_brand, Page=ViewBag.Page })">@abrand.brand_name</a></div>
                 }
             </div>
         </div>
@@ -49,9 +51,9 @@
                     Sắp xếp: <span>@ViewBag.SortParam</span>
                 </div>
                 <div class="group_sort_list">
-                    <a href="@Url.Action("ListPhones", null, new { SortParam = "sort_price_up" })">Giá thấp đến cao</a>
+                    <a href="@Url.Action("ListPhones", null, new { SortParam = "sort_price_up"})">Giá thấp đến cao</a>
                     <a href="@Url.Action("ListPhones", null, new { SortParam = "sort_price_down" })">Giá cao đến thấp</a>
-                    <a href="@Url.Action("ListPhones", null, new { SortParam = "" })">Yêu thích</a>
+                    <a href="@Url.Action("ListPhones", null, new { SortParam = ""})">Yêu thích</a>
                 </div>
             </div>
         </div>
@@ -84,7 +86,7 @@
         <div class="page_list">
             @for (int u = 1; u <= ViewBag.TotalPage; u++)
             {
-                <div class="page_item"><a href="@Url.Action("ListPhones", null, new { Page = @u })">@u</a></div>
+                <div class="page_item"><a href="@Url.Action("ListPhones", null, new { Brand = ViewBag.Brand, Page = @u })">@u</a></div>
             }
         </div>
     </div>

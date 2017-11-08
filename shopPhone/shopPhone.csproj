@@ -206,6 +206,12 @@
     <Compile Include="SP_PageList_RETURN_Result.cs">
       <DependentUpon>shopPhone.tt</DependentUpon>
     </Compile>
+    <Compile Include="SP_phone_brand_PL_Result.cs">
+      <DependentUpon>shopPhone.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SP_phone_price_PL_Result.cs">
+      <DependentUpon>shopPhone.tt</DependentUpon>
+    </Compile>
     <Compile Include="sysdiagram.cs">
       <DependentUpon>shopPhone.tt</DependentUpon>
     </Compile>

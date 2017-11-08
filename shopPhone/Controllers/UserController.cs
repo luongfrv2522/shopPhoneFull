@@ -50,43 +50,46 @@ namespace shopPhone.Controllers
         }
         public ActionResult ListPhones(string SortParam, int? Brand, int? Page=1)
         {
-            
+            var total = new ObjectParameter("total", typeof(int));
             //List<phone> listO = new List<phone>();
             switch (SortParam)
             {
                 case "sort_price_down":
                     {
                         ViewBag.SortParam = "Giá cao đến thấp";
-                        listO = db.phones.OrderByDescending(p => p.price).ToList<phone>();
+                        listO = db.SP_phone_price_PL(Page, 15, true, total).ToList();
                         break;
                     }
                 case "sort_price_up":
                     {
                         ViewBag.SortParam = "Giá thấp đến cao";
-                        listO = db.phones.OrderBy(p => p.price).ToList<phone>();
+                        //var list1 = db.sp_PageList_all(Page, 15, "phone", "price", total).ToList();
+                        listO = db.SP_phone_price_PL(Page, 15, false, total).ToList();
                         break;
                     }
-                    default:
+                default:
                     {
                         ViewBag.SortParam = "Yêu thích";
                         if (Page != null && Page > 0)
                         {
-                            var TotalPage = new ObjectParameter("total", typeof(int));
-                            listO = db.SP_PageList(Page, 10, TotalPage).ToList();
-                            ViewBag.TotalPage = (int)TotalPage.Value;
-
+                            
+                            listO = db.SP_PageList(Page, 15, total).ToList();
                         }
                         break;
                     }
             }
+           
             //
             //list = db.phones.OrderByDescending(p => p.price).ToList<phone>();
 
             /*Lọc theo hãng*/
             if (Brand != null && Brand != 0)
             {
-                listO = db.phones.Where(p => p.id_brand == Brand).ToList();
+                listO = db.SP_phone_brand_PL(Page,15,Brand,total).ToList();
             }
+            ViewBag.TotalPage = (int)total.Value;
+            ViewBag.Brand = Brand;
+            ViewBag.Page = Page;
             return View(listO);
 
         }

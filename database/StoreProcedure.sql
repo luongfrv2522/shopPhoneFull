@@ -90,6 +90,20 @@ END;
 
   ------------------------------------
 GO
+ALTER FUNCTION SP_SoTrang(@quantity_row INT) RETURNS INT
+AS 
+BEGIN
+	DECLARE @surplus INT, @total INT
+	SELECT @total=COUNT(id_phone) FROM [dbo].[phone]
+	SET @surplus = @total % @quantity_row
+	SET @total = @total / @quantity_row
+	IF @surplus!=0
+		SET @total = @total + 1
+	RETURN @total
+END;
+GO
+ PRINT [dbo].[SP_SoTrang](15)
+GO 
 ALTER PROCEDURE sp_PageList_all
 @Page INT,
 @quantity_row INT,
@@ -110,12 +124,7 @@ Các tham số còn lại dùng để gán giá trị cho các tham số đã đ
 	DECLARE @SQLCMD NVARCHAR(MAX)
 	
 	BEGIN TRY
-	 DECLARE @surplus INT
-	   SELECT @total=COUNT(id_phone) FROM [dbo].[phone]
-	   SET @surplus = @total % @quantity_row
-	   SET @total = @total / @quantity_row
-	   IF @surplus!=0
-			SET @total = @total + 1
+		SET @total = [dbo].[SP_SoTrang](@quantity_row)
 		/**/
 		SET @SQLCMD = N'SELECT *
 		FROM '+ @table_name +'
@@ -142,5 +151,58 @@ Các tham số còn lại dùng để gán giá trị cho các tham số đã đ
 END;
 GO
 DECLARE @output INT
-EXEC sp_PageList_all 1, 10, N'phone', N'id_phone', @output
+EXEC sp_PageList_all 1, 10, N'phone', N'id_phone', @output OUTPUT
 PRINT @output
+
+/*---------------------------------------------*/
+GO
+CREATE PROC SP_phone_price_PL
+@Page INT,
+@quantity_row INT,
+@order BIT,
+@total INT OUTPUT
+AS
+BEGIN
+	-----
+	SET @total = [dbo].[SP_SoTrang](@quantity_row)
+	-----
+	IF @order!=0
+	BEGIN
+		SELECT *
+		FROM [ShopDienThoai].[dbo].[phone]
+		ORDER BY [price]
+		OFFSET (@Page-1)*@quantity_row --Page bắt đầu từ 0
+		ROWS FETCH NEXT @quantity_row ROWS ONLY
+	END;
+	ELSE BEGIN
+		SELECT *
+		FROM [ShopDienThoai].[dbo].[phone]
+		ORDER BY [price] DESC
+		OFFSET (@Page-1)*@quantity_row --Page bắt đầu từ 0
+		ROWS FETCH NEXT @quantity_row ROWS ONLY
+	END;
+END;
+
+GO
+CREATE PROC SP_phone_brand_PL
+@Page INT,
+@quantity_row INT,
+@id_brand INT,
+@total INT OUTPUT
+AS
+BEGIN
+	-----
+	DECLARE @surplus INT
+	SELECT @total=COUNT(id_phone) FROM [dbo].[phone]
+	SET @surplus = @total % @quantity_row
+	SET @total = @total / @quantity_row
+	IF @surplus!=0
+		SET @total = @total + 1
+	-----
+	SELECT *
+	FROM [ShopDienThoai].[dbo].[phone]
+	WHERE id_brand = @id_brand
+	ORDER BY id_phone
+	OFFSET (@Page-1)*@quantity_row --Page bắt đầu từ 0
+	ROWS FETCH NEXT @quantity_row ROWS ONLY
+END;
