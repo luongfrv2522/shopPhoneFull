@@ -141,6 +141,13 @@
           <Parameter Name="quantity_row" Type="int" Mode="In" />
           <Parameter Name="total" Type="int" Mode="InOut" />
         </Function>
+        <Function Name="sp_PageList_all" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Page" Type="int" Mode="In" />
+          <Parameter Name="quantity_row" Type="int" Mode="In" />
+          <Parameter Name="table_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="PK_col_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="total" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="SP_PageList_RETURN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Page" Type="int" Mode="In" />
           <Parameter Name="quantity_row" Type="int" Mode="In" />
@@ -214,6 +221,13 @@
           <FunctionImport Name="SP_PageList_RETURN">
             <Parameter Name="Page" Mode="In" Type="Int32" />
             <Parameter Name="quantity_row" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_PageList_all">
+            <Parameter Name="Page" Mode="In" Type="Int32" />
+            <Parameter Name="quantity_row" Mode="In" Type="Int32" />
+            <Parameter Name="table_name" Mode="In" Type="String" />
+            <Parameter Name="PK_col_name" Mode="In" Type="String" />
+            <Parameter Name="total" Mode="InOut" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="brand">
@@ -466,6 +480,7 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_PageList" FunctionName="ShopDienThoaiModel.Store.SP_PageList" />
           <FunctionImportMapping FunctionImportName="SP_PageList_RETURN" FunctionName="ShopDienThoaiModel.Store.SP_PageList_RETURN" />
+          <FunctionImportMapping FunctionImportName="sp_PageList_all" FunctionName="ShopDienThoaiModel.Store.sp_PageList_all" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

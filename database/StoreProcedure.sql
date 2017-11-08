@@ -67,20 +67,11 @@ CREATE PROCEDURE SP_PageList_Table
 AS
 BEGIN
 	BEGIN TRY
-		SELECT [id_phone]
-			  ,[phone_name]
-			  ,[description]
-			  ,[image_feature]
-			  ,[price]
-			  ,[status]
-			  ,[position]
-			  ,[id_brand]
-			  ,[created_at]
-			  ,[updated_at]
-		  FROM [ShopDienThoai].[dbo].[phone]
-		  ORDER BY [id_phone]
-		  OFFSET (@Page-1)*@quantity_row --Page bắt đầu từ 0
-		  ROWS FETCH NEXT @quantity_row ROWS ONLY
+		SELECT *
+		FROM [ShopDienThoai].[dbo].[phone]
+		ORDER BY [id_phone]
+		OFFSET (@Page-1)*@quantity_row --Page bắt đầu từ 0
+		ROWS FETCH NEXT @quantity_row ROWS ONLY
 	   
 	   DECLARE @surplus INT
 	   SELECT @total=COUNT([id_phone]) FROM [dbo].[phone]
@@ -91,14 +82,65 @@ BEGIN
 	   --RETURN @total --Tổng số trang
 	END TRY
 	BEGIN CATCH
-		/*SELECT
-			ERROR_NUMBER() AS ErrorNumber,
-			ERROR_SEVERITY() AS ErrorSeverity,
-			ERROR_STATE() AS ErrorState,
-			ERROR_LINE() AS ErrorLine,
-			ERROR_PROCEDURE() AS ErrorProcedure,
-			ERROR_MESSAGE() AS ErrorMessage*/
 		PRINT 'Page>0 & quantity>0';
 		THROW;
 	END CATCH
-  END;
+END;
+
+
+  ------------------------------------
+GO
+ALTER PROCEDURE sp_PageList_all
+@Page INT,
+@quantity_row INT,
+@table_name NVARCHAR(50),
+@PK_col_name NVARCHAR(50),
+@total INT OUTPUT
+AS
+BEGIN
+/*
+@statement: là câu lệnh bạn yêu cầu thực hiện, có kiểu dữ liệu NVARCHAR(MAX) (với SQL Server 2000 là NTEXT). Chú ý là nó chỉ chấp nhận kiểu NVARCHAR là unicode chứ không chấp nhận kiểu VARCHAR.
+
+@params: là định nghĩa các tham số dùng trong câu lệnh, cũng yêu cầu kiểu dữ liệu NVARCHAR(MAX) (hoặc NTEXT với SQL Server 2000)
+
+Các tham số còn lại dùng để gán giá trị cho các tham số đã được khai báo trong @ParamDefinition
+*/
+	
+/**/
+	DECLARE @SQLCMD NVARCHAR(MAX)
+	
+	BEGIN TRY
+	 DECLARE @surplus INT
+	   SELECT @total=COUNT(id_phone) FROM [dbo].[phone]
+	   SET @surplus = @total % @quantity_row
+	   SET @total = @total / @quantity_row
+	   IF @surplus!=0
+			SET @total = @total + 1
+		/**/
+		SET @SQLCMD = N'SELECT *
+		FROM '+ @table_name +'
+		ORDER BY '+ @PK_col_name +' 
+		OFFSET (@Page-1)*@quantity_row
+		ROWS FETCH NEXT @quantity_row ROWS ONLY'
+	   DECLARE @STATEMENT NVARCHAR(MAX),@ParamDefinition NVARCHAR(MAX) -- EXEC SP_EXECUTESQL 
+	   SET @ParamDefinition = N'@Page INT, @quantity_row INT'
+	   EXEC SP_EXECUTESQL 
+		@STATEMENT = @SQLCMD, 
+		@params = @ParamDefinition,
+		@Page = @Page,
+		@quantity_row = @quantity_row
+	   /**/
+	  
+	   --RETURN @total --Tổng số trang
+	END TRY
+	BEGIN CATCH
+		PRINT 'Page>0 & quantity>0';
+		THROW;
+	END CATCH
+	/**/
+
+END;
+GO
+DECLARE @output INT
+EXEC sp_PageList_all 1, 10, N'phone', N'id_phone', @output
+PRINT @output

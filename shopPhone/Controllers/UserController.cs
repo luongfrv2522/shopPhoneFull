@@ -74,6 +74,7 @@ namespace shopPhone.Controllers
                             var TotalPage = new ObjectParameter("total", typeof(int));
                             listO = db.SP_PageList(Page, 10, TotalPage).ToList();
                             ViewBag.TotalPage = (int)TotalPage.Value;
+
                         }
                         break;
                     }

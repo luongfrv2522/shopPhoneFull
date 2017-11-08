@@ -73,5 +73,26 @@ namespace shopPhone
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SP_PageList_RETURN", pageParameter, quantity_rowParameter);
         }
+    
+        public virtual int sp_PageList_all(Nullable<int> page, Nullable<int> quantity_row, string table_name, string pK_col_name, ObjectParameter total)
+        {
+            var pageParameter = page.HasValue ?
+                new ObjectParameter("Page", page) :
+                new ObjectParameter("Page", typeof(int));
+    
+            var quantity_rowParameter = quantity_row.HasValue ?
+                new ObjectParameter("quantity_row", quantity_row) :
+                new ObjectParameter("quantity_row", typeof(int));
+    
+            var table_nameParameter = table_name != null ?
+                new ObjectParameter("table_name", table_name) :
+                new ObjectParameter("table_name", typeof(string));
+    
+            var pK_col_nameParameter = pK_col_name != null ?
+                new ObjectParameter("PK_col_name", pK_col_name) :
+                new ObjectParameter("PK_col_name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_PageList_all", pageParameter, quantity_rowParameter, table_nameParameter, pK_col_nameParameter, total);
+        }
     }
 }
