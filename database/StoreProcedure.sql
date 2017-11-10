@@ -184,7 +184,7 @@ BEGIN
 END;
 
 GO
-CREATE PROC SP_phone_brand_PL
+ALTER PROC SP_phone_brand_PL
 @Page INT,
 @quantity_row INT,
 @id_brand INT,
@@ -194,6 +194,7 @@ BEGIN
 	-----
 	DECLARE @surplus INT
 	SELECT @total=COUNT(id_phone) FROM [dbo].[phone]
+	WHERE id_brand = @id_brand
 	SET @surplus = @total % @quantity_row
 	SET @total = @total / @quantity_row
 	IF @surplus!=0
